@@ -12,7 +12,7 @@ npm i @flerokoo/graceful-shutdown-handler
 ```
 
 ```ts
-import GracefulShutdownHandler from "graceful-shutdown-handler";
+import GracefulShutdownHandler from "@flerokoo/graceful-shutdown-handler";
 
 const handler = new GracefulShutdownHandler({
   // events that trigger shutdown (default: ['SIGINT', 'SIGTERM', 'uncaughtException', 'unhandledRejection'])
