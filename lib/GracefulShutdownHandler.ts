@@ -35,7 +35,7 @@ export class GracefulShutdownHandler extends TypeSafeEventEmitter<EventTypesMap>
     super();
     options ??= {} as GracefulShutdownHandlerOptions;
     options.timeout ??= 30;
-    options.exitDelay ??= 1;
+    options.exitDelay ??= 0.1;
     options.events ??= ['SIGINT', 'SIGTERM', 'uncaughtException', 'unhandledRejection'];
     options.timeoutExitCode ??= 1;
     assert(isPositiveNumber(options.timeout), 'timeout should be a positive number');
@@ -49,6 +49,7 @@ export class GracefulShutdownHandler extends TypeSafeEventEmitter<EventTypesMap>
       'minimumShutdownTime should be a positive number'
     );
     this._options = options as GracefulShutdownHandlerOptions;
+    this.addListeners();
   }
 
   public get isShuttingDown() {
@@ -65,7 +66,7 @@ export class GracefulShutdownHandler extends TypeSafeEventEmitter<EventTypesMap>
     this._callbacks.push({ fn, blocking, order });
   }
 
-  public enable() {
+  private addListeners() {
     if (this.enabled || this.isShuttingDown) return;
 
     const shutdown = () => {
