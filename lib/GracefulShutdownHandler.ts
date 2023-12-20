@@ -62,7 +62,7 @@ export class GracefulShutdownHandler extends TypeSafeEventEmitter<EventTypesMap>
 
   public addCallback(fn: CallbackFunction, opts?: ShutdownCallbackOptions) {
     const blocking = Boolean(opts?.blocking);
-    const order = isPositiveNumber(opts?.order) ? (opts!.order as number) : 0;
+    const order = isValidNumber(opts?.order) ? (opts!.order as number) : 0;
     this._callbacks.push({ fn, blocking, order });
   }
 
